@@ -1,7 +1,7 @@
 import { NextPage } from 'next';
 
 import { getFeaturedEvents } from '../dummyData';
-import { EventList } from '../views';
+import { EventList } from '../views/containers';
 
 const featuredEvents = getFeaturedEvents();
 

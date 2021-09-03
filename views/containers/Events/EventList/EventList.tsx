@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { DummyEvent } from '../../../dummyData';
+import { DummyEvent } from '../../../../dummyData';
 import { EventItem } from '../EventItem';
 import styles from './EventList.module.css';
 

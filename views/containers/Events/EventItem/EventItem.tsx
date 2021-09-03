@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
 import moment from 'moment';
 
-import { DummyEvent, EVENT_IMAGES_MAP } from '../../../dummyData';
+import { DummyEvent, EVENT_IMAGES_MAP } from '../../../../dummyData';
+import { AddressIcon, ArrowRightIcon, ButtonLink, DateIcon } from '../../../common';
 import styles from './EventItem.module.css';
 
 interface EventItemProps {
@@ -22,14 +22,21 @@ export const EventItem: React.FC<EventItemProps> = ({ item }) => {
         <div>
           <h2>{item.title}</h2>
           <div className={styles.date}>
+            <DateIcon />
             <time>{humanReadableDate}</time>
           </div>
           <div className={styles.address}>
+            <AddressIcon />
             <address>{formattedAddress}</address>
           </div>
         </div>
         <div className={styles.actions}>
-          <Link href={`/events/${item.id}`}>Explore Event</Link>
+          <ButtonLink href={`/events/${item.id}`}>
+            <span>Explore Event</span>
+            <span className={styles.icon}>
+              <ArrowRightIcon />
+            </span>
+          </ButtonLink>
         </div>
       </div>
     </li>
