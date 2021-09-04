@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { DummyEvent } from '../../../../dummyData';
-import { EventItem } from '../EventItem';
+import { DummyEvent } from '../../../dummyData';
+import { EventItem } from './EventItem';
 import styles from './EventList.module.css';
 
 interface EventListProps {

@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react';
 import Image from 'next/image';
-import moment from 'moment';
 
 import { DummyEvent, EVENT_IMAGES_MAP } from '../../../../dummyData';
 import { AddressIcon, ArrowRightIcon, ButtonLink, DateIcon } from '../../../common';
+import { StringFormatter } from '../../../../utils';
 import styles from './EventItem.module.css';
 
 interface EventItemProps {
@@ -11,9 +11,8 @@ interface EventItemProps {
 }
 
 export const EventItem: React.FC<EventItemProps> = ({ item }) => {
-  const humanReadableDate = useMemo(() => moment(item.date).format('dddd, MMMM Do YYYY'), [item.date]);
-
-  const formattedAddress = useMemo(() => item.location.replace(', ', '\n'), [item.location]);
+  const humanReadableDate = useMemo(() => StringFormatter.humanReadableDate(item.date), [item.date]);
+  const formattedAddress = useMemo(() => StringFormatter.formattedAddress(item.location), [item.location]);
 
   return (
     <li className={styles.item}>
