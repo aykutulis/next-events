@@ -4,13 +4,22 @@ import Link from 'next/link';
 import styles from './Button.module.css';
 
 interface ButtonLinkProps {
-  href: string;
+  href?: string;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-export const ButtonLink: React.FC<ButtonLinkProps> = ({ href, children }) => {
+export const ButtonLink: React.FC<ButtonLinkProps> = ({ href, onClick, children }) => {
+  if (href) {
+    return (
+      <Link href={href}>
+        <a className={styles.btn}>{children}</a>
+      </Link>
+    );
+  }
+
   return (
-    <Link href={href}>
-      <a className={styles.btn}>{children}</a>
-    </Link>
+    <button className={styles.btn} onClick={onClick}>
+      {children}
+    </button>
   );
 };
