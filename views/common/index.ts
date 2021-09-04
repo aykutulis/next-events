@@ -1,2 +1,3 @@
-export * from './ButtonLink';
 export * from './Icons';
+export * from './ButtonLink';
+export * from './ErrorAlert';

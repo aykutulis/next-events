@@ -2,16 +2,29 @@ import { useMemo } from 'react';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 
+import { ButtonLink, ErrorAlert } from '../../views/common';
 import { EventLogistics, EventSummary, EventContent } from '../../views/containers';
-import { getEventById, EVENT_IMAGES_MAP } from '../../dummyData';
+import { getEventById, EVENT_IMAGES_MAP, DummyEvent } from '../../dummyData';
 
 const EventDetailPage: NextPage = () => {
   const router = useRouter();
 
-  const event = useMemo(() => getEventById(router.query.eventId as string), [router.query.eventId]);
+  const event = useMemo<DummyEvent | undefined>(
+    () => getEventById(router.query.eventId as string | undefined),
+    [router.query.eventId]
+  );
 
   if (!event) {
-    return <p>No event found!</p>;
+    return (
+      <>
+        <ErrorAlert>
+          <p>No event found!</p>
+        </ErrorAlert>
+        <div className='center'>
+          <ButtonLink onClick={() => router.back()}>Back</ButtonLink>
+        </div>
+      </>
+    );
   }
 
   return (

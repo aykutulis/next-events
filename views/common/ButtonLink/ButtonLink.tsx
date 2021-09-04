@@ -1,10 +1,11 @@
+import { UrlObject } from 'url';
 import React from 'react';
 import Link from 'next/link';
 
 import styles from './Button.module.css';
 
 interface ButtonLinkProps {
-  href?: string;
+  href?: string | UrlObject;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 

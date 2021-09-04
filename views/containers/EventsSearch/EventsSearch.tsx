@@ -1,13 +1,8 @@
 import React, { useCallback, useState } from 'react';
-import moment from 'moment';
 
 import { ButtonLink } from '../../common';
+import { DEFAULT_MONTH_VALUE, DEFAULT_YEAR, MONTHS, YEARS } from '../../../constants';
 import styles from './EventsSearch.module.css';
-
-const YEARS = ['2021', '2022'];
-const MONTHS = moment.months().map((m, i) => ({ value: i + 1, text: m }));
-const DEFAULT_YEAR = '2021';
-const DEFAULT_MONTH_VALUE = '1';
 
 interface EventsSearchProps {
   onSearch: (year: string, month: string) => void;

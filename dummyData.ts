@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 import e1 from './assets/e1.jpg';
 import e2 from './assets/e2.jpg';
 import e3 from './assets/e3.jpg';
@@ -53,7 +55,7 @@ const DUMMY_EVENTS: DummyEvent[] = [
   },
 ];
 
-export function getFeaturedEvents() {
+export function getFeaturedEvents(): DummyEvent[] {
   return DUMMY_EVENTS.filter((event) => event.isFeatured);
 }
 
@@ -61,17 +63,23 @@ export function getAllEvents() {
   return DUMMY_EVENTS;
 }
 
-export function getFilteredEvents(dateFilter: { year: number; month: number }) {
-  const { year, month } = dateFilter;
+export function getFilteredEvents(year?: number, month?: number): DummyEvent[] {
+  if (!year || !month) {
+    return [];
+  }
 
-  let filteredEvents = DUMMY_EVENTS.filter((event) => {
-    const eventDate = new Date(event.date);
-    return eventDate.getFullYear() === year && eventDate.getMonth() === month - 1;
+  const filteredEvents = DUMMY_EVENTS.filter((event) => {
+    const eventDate = moment(event.date);
+    return eventDate.year() === year && eventDate.month() === month - 1;
   });
 
   return filteredEvents;
 }
 
-export function getEventById(id: string) {
+export function getEventById(id?: string): DummyEvent | undefined {
+  if (!id) {
+    return undefined;
+  }
+
   return DUMMY_EVENTS.find((event) => event.id === id);
 }
