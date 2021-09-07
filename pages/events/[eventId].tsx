@@ -1,18 +1,18 @@
-import { useMemo } from 'react';
-import { NextPage } from 'next';
+import { NextPage, GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
 
 import { ButtonLink, ErrorAlert } from '../../views/common';
+import { EVENT_IMAGES_MAP } from '../../constants';
 import { EventLogistics, EventSummary, EventContent } from '../../views/containers';
-import { getEventById, EVENT_IMAGES_MAP, DummyEvent } from '../../dummyData';
+import { getEventById, getAllEvents } from '../../utils';
+import { Event, EventId } from '../../types';
 
-const EventDetailPage: NextPage = () => {
+interface EventDetailPageProps {
+  event?: Event;
+}
+
+const EventDetailPage: NextPage<EventDetailPageProps> = ({ event }) => {
   const router = useRouter();
-
-  const event = useMemo<DummyEvent | undefined>(
-    () => getEventById(router.query.eventId as string | undefined),
-    [router.query.eventId]
-  );
 
   if (!event) {
     return (
@@ -41,6 +41,29 @@ const EventDetailPage: NextPage = () => {
       </EventContent>
     </>
   );
+};
+
+type UrlParams = { eventId?: EventId };
+
+export const getStaticProps: GetStaticProps<EventDetailPageProps, UrlParams> = async ({ params }) => {
+  const event = await getEventById(params?.eventId);
+
+  return {
+    props: {
+      event,
+    },
+  };
+};
+
+export const getStaticPaths: GetStaticPaths<UrlParams> = async () => {
+  const events = await getAllEvents();
+
+  const paths: { params: UrlParams }[] = events.map((event) => ({ params: { eventId: event.id } }));
+
+  return {
+    paths,
+    fallback: false,
+  };
 };
 
 export default EventDetailPage;

@@ -1,2 +1,2 @@
 export * from './StringFormatter';
-export * from './actions';
+export * from './getDataFunctions';
