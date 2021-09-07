@@ -1,8 +1,8 @@
 import moment from 'moment';
 
-import e1 from './assets/e1.jpg';
-import e2 from './assets/e2.jpg';
-import e3 from './assets/e3.jpg';
+import e1 from './assets/images/e1.jpg';
+import e2 from './assets/images/e2.jpg';
+import e3 from './assets/images/e3.jpg';
 
 export type EventId = 'e1' | 'e2' | 'e3';
 
