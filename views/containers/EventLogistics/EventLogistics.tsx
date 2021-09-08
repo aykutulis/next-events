@@ -20,7 +20,7 @@ export const EventLogistics: React.FC<EventLogisticsProps> = ({ address, date, i
   return (
     <section className={styles.logistics}>
       <div className={styles.image}>
-        <Image src={image} alt={imageAlt} />
+        <Image src={image} alt={imageAlt} width={200} height={200} />
       </div>
       <ul className={styles.list}>
         <LogisticsItem icon={DateIcon}>

@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { NextPage, GetStaticProps } from 'next';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import { EventList, EventsSearch } from '../../views/containers';
@@ -24,6 +25,10 @@ const EventsPage: NextPage<EventsPageProps> = ({ allEvents }) => {
 
   return (
     <>
+      <Head>
+        <title>NextEvents | All Events</title>
+        <meta name='description' content='Find a lot of great events that allow you to evolve...' />
+      </Head>
       <EventsSearch onSearch={searchHandler} />
       <EventList items={allEvents} />
     </>

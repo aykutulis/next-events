@@ -16,7 +16,7 @@ export const EventItem: React.FC<EventItemProps> = ({ item }) => {
 
   return (
     <li className={styles.item}>
-      <Image src={EVENT_IMAGES_MAP[item.id]} alt={item.title} />
+      <Image src={EVENT_IMAGES_MAP[item.id]} alt={item.title} width={250} height={160} />
       <div className={styles.content}>
         <div>
           <h2>{item.title}</h2>

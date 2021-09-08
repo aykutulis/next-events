@@ -1,4 +1,5 @@
 import { NextPage, GetStaticProps } from 'next';
+import Head from 'next/head';
 
 import { getFeaturedEvents } from '../utils';
 import { EventList } from '../views/containers';
@@ -11,6 +12,10 @@ interface HomePageProps {
 const HomePage: NextPage<HomePageProps> = ({ featuredEvents }) => {
   return (
     <div>
+      <Head>
+        <title>NextEvents</title>
+        <meta name='description' content='Find a lot of great events that allow you to evolve...' />
+      </Head>
       <EventList items={featuredEvents} />
     </div>
   );

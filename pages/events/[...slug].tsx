@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 import useSWR from 'swr';
 
 import { ButtonLink, Alert } from '../../views/common';
@@ -26,17 +27,30 @@ const FilteredEventsPage: NextPage = () => {
     return getFilteredEvents({ year: yearFilter, month: monthFilter }, parseDbResponse(data));
   }, [yearFilter, monthFilter, data]);
 
+  const headContent = useMemo(() => {
+    return (
+      <Head>
+        <title>NextEvents | Filtered Events</title>
+        <meta name='description' content={`All events for ${monthFilter}/${yearFilter}`} />
+      </Head>
+    );
+  }, [monthFilter, yearFilter]);
+
   if (!error && !data) {
     return (
-      <Alert variant='info'>
-        <p className='center'>Loading</p>
-      </Alert>
+      <>
+        {headContent}
+        <Alert variant='info'>
+          <p className='center'>Loading</p>
+        </Alert>
+      </>
     );
   }
 
   if (error || !yearFilter || !monthFilter) {
     return (
       <>
+        {headContent}
         <Alert variant='error'>
           <p className='center'>Invalid filter. Please adjust your values!</p>
         </Alert>
@@ -50,6 +64,7 @@ const FilteredEventsPage: NextPage = () => {
   if (filteredEvents?.length === 0) {
     return (
       <>
+        {headContent}
         <Alert variant='warning'>
           <p className='center'>No event found in this filter!</p>
         </Alert>
@@ -62,6 +77,7 @@ const FilteredEventsPage: NextPage = () => {
 
   return (
     <>
+      {headContent}
       <ResultsTitle date={new Date(yearFilter, monthFilter - 1)} />
       <EventList items={filteredEvents} />
     </>

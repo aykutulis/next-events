@@ -1,5 +1,6 @@
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 
 import { ButtonLink, Alert } from '../../views/common';
 import { EVENT_IMAGES_MAP } from '../../constants';
@@ -29,6 +30,10 @@ const EventDetailPage: NextPage<EventDetailPageProps> = ({ event }) => {
 
   return (
     <>
+      <Head>
+        <title>NextEvents | {event.title}</title>
+        <meta name='description' content={event.description} />
+      </Head>
       <EventSummary title={event.title} />
       <EventLogistics
         date={event.date}
