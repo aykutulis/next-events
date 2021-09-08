@@ -1,13 +1,16 @@
 import { useCallback } from 'react';
-import { NextPage } from 'next';
+import { NextPage, GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 
 import { EventList, EventsSearch } from '../../views/containers';
-import { getAllEvents } from '../../dummyData';
+import { getAllEvents } from '../../utils';
+import { Event } from '../../types';
 
-const ALL_EVENTS = getAllEvents();
+interface EventsPageProps {
+  allEvents: Event[];
+}
 
-const EventsPage: NextPage = () => {
+const EventsPage: NextPage<EventsPageProps> = ({ allEvents }) => {
   const router = useRouter();
 
   const searchHandler = useCallback(
@@ -22,9 +25,20 @@ const EventsPage: NextPage = () => {
   return (
     <>
       <EventsSearch onSearch={searchHandler} />
-      <EventList items={ALL_EVENTS} />
+      <EventList items={allEvents} />
     </>
   );
+};
+
+export const getStaticProps: GetStaticProps<EventsPageProps> = async () => {
+  const allEvents = await getAllEvents();
+
+  return {
+    props: {
+      allEvents,
+    },
+    revalidate: 60,
+  };
 };
 
 export default EventsPage;

@@ -1,14 +1,14 @@
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
 
-import { ButtonLink, ErrorAlert } from '../../views/common';
+import { ButtonLink, Alert } from '../../views/common';
 import { EVENT_IMAGES_MAP } from '../../constants';
 import { EventLogistics, EventSummary, EventContent } from '../../views/containers';
-import { getEventById, getAllEvents } from '../../utils';
+import { getEventById, getFeaturedEvents } from '../../utils';
 import { Event, EventId } from '../../types';
 
 interface EventDetailPageProps {
-  event?: Event;
+  event?: Event | null;
 }
 
 const EventDetailPage: NextPage<EventDetailPageProps> = ({ event }) => {
@@ -17,9 +17,9 @@ const EventDetailPage: NextPage<EventDetailPageProps> = ({ event }) => {
   if (!event) {
     return (
       <>
-        <ErrorAlert>
-          <p>No event found!</p>
-        </ErrorAlert>
+        <Alert variant='info'>
+          <p>Loading...</p>
+        </Alert>
         <div className='center'>
           <ButtonLink onClick={() => router.back()}>Back</ButtonLink>
         </div>
@@ -50,19 +50,20 @@ export const getStaticProps: GetStaticProps<EventDetailPageProps, UrlParams> = a
 
   return {
     props: {
-      event,
+      event: event || null,
     },
+    revalidate: 10,
   };
 };
 
 export const getStaticPaths: GetStaticPaths<UrlParams> = async () => {
-  const events = await getAllEvents();
+  const events = await getFeaturedEvents();
 
   const paths: { params: UrlParams }[] = events.map((event) => ({ params: { eventId: event.id } }));
 
   return {
     paths,
-    fallback: false,
+    fallback: true,
   };
 };
 

@@ -23,7 +23,7 @@ export const getStaticProps: GetStaticProps<HomePageProps> = async () => {
     props: {
       featuredEvents,
     },
-    revalidate: 10,
+    revalidate: 1800,
   };
 };
 
