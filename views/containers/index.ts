@@ -4,3 +4,5 @@ export * from './EventLogistics';
 export * from './EventSummary';
 export * from './EventsSearch';
 export * from './ResultsTitle';
+export * from './Comments';
+export * from './NewsletterRegistration';

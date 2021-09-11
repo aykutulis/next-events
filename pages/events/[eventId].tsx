@@ -4,7 +4,7 @@ import Head from 'next/head';
 
 import { ButtonLink, Alert } from '../../views/common';
 import { EVENT_IMAGES_MAP } from '../../constants';
-import { EventLogistics, EventSummary, EventContent } from '../../views/containers';
+import { EventLogistics, EventSummary, EventContent, Comments } from '../../views/containers';
 import { getEventById, getFeaturedEvents } from '../../utils';
 import { Event, EventId } from '../../types';
 
@@ -44,6 +44,7 @@ const EventDetailPage: NextPage<EventDetailPageProps> = ({ event }) => {
       <EventContent>
         <p>{event.description}</p>
       </EventContent>
+      <Comments eventId={event.id} />
     </>
   );
 };
