@@ -3,10 +3,15 @@ import moment from 'moment';
 
 import { Event, EventFromDb, EventId } from '../types';
 
-export const ENDPOINT = 'https://next-events-4b226-default-rtdb.firebaseio.com';
+export const FIREBASE_ENDPOINT = 'https://next-events-4b226-default-rtdb.firebaseio.com';
+export const NEXT_ENDPOINT = '/api';
 
-const client = axios.create({
-  baseURL: ENDPOINT,
+const firebaseClient = axios.create({
+  baseURL: FIREBASE_ENDPOINT,
+});
+
+const nextClient = axios.create({
+  baseURL: NEXT_ENDPOINT,
 });
 
 export interface DbResponse {
@@ -25,7 +30,7 @@ export const parseDbResponse = (data: DbResponse | undefined): Event[] => {
 };
 
 export const getAllEvents = async () => {
-  const { data } = await client.get<DbResponse>('/events.json');
+  const { data } = await firebaseClient.get<DbResponse>('/events.json');
 
   const events = parseDbResponse(data);
 
@@ -55,4 +60,9 @@ export const getFilteredEvents = (date: { year?: number; month?: number }, allEv
   });
 
   return filteredEvents;
+};
+
+export const postNewsletter = async (email: string) => {
+  const { data } = await nextClient.post<{ message: string }>('/newsletter', { email });
+  return { data };
 };
