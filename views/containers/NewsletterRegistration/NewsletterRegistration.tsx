@@ -10,7 +10,7 @@ export const NewsletterRegistration: React.FC = () => {
     async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
 
-      const { data } = await postNewsletter(email);
+      const data = await postNewsletter(email);
       console.log(data);
     },
     [email]

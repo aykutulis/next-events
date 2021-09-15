@@ -14,6 +14,7 @@ const handler: NextApiHandler<ResData> = (req, res) => {
 
     if (!email || !email.includes('@')) {
       res.status(422).json({ message: 'Invalid email address.' });
+      return;
     }
 
     res.status(201).json({ message: 'Signed up!' });

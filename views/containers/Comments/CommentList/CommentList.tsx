@@ -1,23 +1,23 @@
 import React from 'react';
 
+import { CommentFromServer } from '../../../../types';
 import styles from './CommentList.module.css';
 
-export const CommentList: React.FC = () => {
+interface CommentListProps {
+  comments: CommentFromServer[];
+}
+
+export const CommentList: React.FC<CommentListProps> = ({ comments }) => {
   return (
     <ul className={styles.comments}>
-      {/* Render list of comments - fetched from API */}
-      <li>
-        <p>My comment is amazing!</p>
-        <div>
-          By <address>Sigmund</address>
-        </div>
-      </li>
-      <li>
-        <p>My comment is amazing!</p>
-        <div>
-          By <address>Nicola</address>
-        </div>
-      </li>
+      {comments.map((c) => (
+        <li key={c.id}>
+          <p>{c.text}</p>
+          <div>
+            By <address>{c.name}</address>
+          </div>
+        </li>
+      ))}
     </ul>
   );
 };

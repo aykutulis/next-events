@@ -1,2 +1,2 @@
 export * from './StringFormatter';
-export * from './getDataFunctions';
+export * from './clients';

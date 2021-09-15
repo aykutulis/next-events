@@ -3,3 +3,7 @@ export interface Comment {
   name: string;
   text: string;
 }
+
+export interface CommentFromServer extends Comment {
+  id: string;
+}

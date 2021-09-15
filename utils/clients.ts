@@ -1,7 +1,7 @@
 import axios from 'axios';
 import moment from 'moment';
 
-import { Event, EventFromDb, EventId } from '../types';
+import { Event, EventFromDb, EventId, Comment, CommentFromServer } from '../types';
 
 export const FIREBASE_ENDPOINT = 'https://next-events-4b226-default-rtdb.firebaseio.com';
 export const NEXT_ENDPOINT = '/api';
@@ -64,5 +64,17 @@ export const getFilteredEvents = (date: { year?: number; month?: number }, allEv
 
 export const postNewsletter = async (email: string) => {
   const { data } = await nextClient.post<{ message: string }>('/newsletter', { email });
-  return { data };
+  return data;
+};
+
+export const postComment = async (evendId: string, comment: Comment) => {
+  const { data } = await nextClient.post<{ message: string; comment: CommentFromServer }>(`/comments/${evendId}`, {
+    comment,
+  });
+  return data;
+};
+
+export const getAllComments = async (evendId: string) => {
+  const { data } = await nextClient.get<{ message: string; comments: CommentFromServer[] }>(`/comments/${evendId}`);
+  return data;
 };
