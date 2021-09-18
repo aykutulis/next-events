@@ -1,17 +1,17 @@
 import React from 'react';
 
-import { CommentFromServer } from '../../../../types';
+import { Comment } from '../../../../types';
 import styles from './CommentList.module.css';
 
 interface CommentListProps {
-  comments: CommentFromServer[];
+  comments: Comment[];
 }
 
 export const CommentList: React.FC<CommentListProps> = ({ comments }) => {
   return (
     <ul className={styles.comments}>
       {comments.map((c) => (
-        <li key={c.id}>
+        <li key={c._id}>
           <p>{c.text}</p>
           <div>
             By <address>{c.name}</address>

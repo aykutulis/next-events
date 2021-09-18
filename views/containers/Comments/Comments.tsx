@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { CommentList } from './CommentList';
 import { NewComment } from './NewComment';
 import { postComment, getAllComments } from '../../../utils';
-import { Comment, CommentFromServer, EventId } from '../../../types';
+import { Comment, EventId } from '../../../types';
 import styles from './Comments.module.css';
 
 interface CommentsProps {
@@ -12,7 +12,7 @@ interface CommentsProps {
 
 export const Comments: React.FC<CommentsProps> = ({ eventId }) => {
   const [showComments, setShowComments] = useState(false);
-  const [comments, setComments] = useState<CommentFromServer[]>([]);
+  const [comments, setComments] = useState<Comment[]>([]);
 
   useEffect(() => {
     if (!showComments) return;

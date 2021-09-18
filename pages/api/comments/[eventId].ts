@@ -1,18 +1,20 @@
 import type { NextApiHandler } from 'next';
+import { MongoClient } from 'mongodb';
 
-import { CommentFromServer, Comment } from '../../../types';
+import { CommentServer } from '../../../types';
 
 interface ReqData {
-  comment: Comment;
+  comment: CommentServer;
 }
 
 interface ResData {
   message?: string;
-  comment?: CommentFromServer;
-  comments?: CommentFromServer[];
+  comment?: CommentServer;
+  comments?: CommentServer[];
 }
 
-const handler: NextApiHandler<ResData> = (req, res) => {
+const handler: NextApiHandler<ResData> = async (req, res) => {
+  const client = await MongoClient.connect(process.env.MONGO_URI);
   if (req.method === 'POST') {
     const {
       comment: { email, name, text },
@@ -23,24 +25,27 @@ const handler: NextApiHandler<ResData> = (req, res) => {
       return;
     }
 
-    const newComment: CommentFromServer = {
-      id: Date.now().toString(),
+    const newComment: CommentServer = {
       email,
       name,
       text,
+      eventId: req.query.eventId as string,
     };
+
+    const db = client.db();
+    const result = await db.collection('comments').insertOne(newComment);
+    newComment._id = result.insertedId;
 
     res.status(201).json({ message: 'Comment added.', comment: newComment });
   }
 
   if (req.method === 'GET') {
-    const dummyList: CommentFromServer[] = [
-      { id: 'c1', name: 'Alan', email: 'alan@turing.com', text: 'The first comment!' },
-      { id: 'c2', name: 'Sigmund', email: 'sigmund@freud.com', text: 'The second comment!' },
-    ];
+    const db = client.db();
+    const comments = await db.collection<CommentServer>('comments').find().sort({ _id: -1 }).toArray();
 
-    res.status(200).json({ comments: dummyList });
+    res.status(200).json({ comments });
   }
+  client.close();
 };
 
 export default handler;

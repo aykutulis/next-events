@@ -1,7 +1,7 @@
 import axios from 'axios';
 import moment from 'moment';
 
-import { Event, EventFromDb, EventId, Comment, CommentFromServer } from '../types';
+import { Event, EventFromDb, EventId, Comment } from '../types';
 
 export const FIREBASE_ENDPOINT = 'https://next-events-4b226-default-rtdb.firebaseio.com';
 export const NEXT_ENDPOINT = '/api';
@@ -68,13 +68,13 @@ export const postNewsletter = async (email: string) => {
 };
 
 export const postComment = async (evendId: string, comment: Comment) => {
-  const { data } = await nextClient.post<{ message: string; comment: CommentFromServer }>(`/comments/${evendId}`, {
+  const { data } = await nextClient.post<{ message: string; comment: Comment }>(`/comments/${evendId}`, {
     comment,
   });
   return data;
 };
 
 export const getAllComments = async (evendId: string) => {
-  const { data } = await nextClient.get<{ message: string; comments: CommentFromServer[] }>(`/comments/${evendId}`);
+  const { data } = await nextClient.get<{ message: string; comments: Comment[] }>(`/comments/${evendId}`);
   return data;
 };

@@ -7,7 +7,7 @@ import useSWR from 'swr';
 import { ButtonLink, Alert } from '../../views/common';
 import { EventList, ResultsTitle } from '../../views/containers';
 import { useDateFilterFromSlug } from '../../hooks';
-import { getFilteredEvents, ENDPOINT, DbResponse, parseDbResponse } from '../../utils';
+import { getFilteredEvents, FIREBASE_ENDPOINT, DbResponse, parseDbResponse } from '../../utils';
 import { Event } from '../../types';
 
 /* interface FilteredEventsPageProps {
@@ -20,7 +20,7 @@ const FilteredEventsPage: NextPage = () => {
   const router = useRouter();
   const { yearFilter, monthFilter } = useDateFilterFromSlug(router.query.slug);
   const { data, error } = useSWR<DbResponse, Error>(
-    `${ENDPOINT}/events.json`,
+    `${FIREBASE_ENDPOINT}/events.json`,
     (input: RequestInfo, init: RequestInit) => fetch(input, init).then((res) => res.json())
   );
   const filteredEvents = useMemo<Event[] | undefined>(() => {
